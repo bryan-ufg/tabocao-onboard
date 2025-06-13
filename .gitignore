@@ -25,7 +25,7 @@ instance/
 #migrations/versions/
 
 # Environment variables
-#.env
+.env
 .env.*
 
 # IDEs and editors
