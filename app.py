@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 from db import db
 from crypt import bcrypt
+from jwt_auth import jwt
 
 from resources import UserBlueprint
 
@@ -22,6 +23,7 @@ def create_app():
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 
     db.init_app(app)
 
@@ -31,6 +33,7 @@ def create_app():
     api.register_blueprint(UserBlueprint)
 
     bcrypt.init_app(app)
+    jwt.init_app(app)
 
     return app
 
