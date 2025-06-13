@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 
 from db import db
+from crypt import bcrypt
 
 from resources import UserBlueprint
 
@@ -28,6 +29,8 @@ def create_app():
 
     api = Api(app)
     api.register_blueprint(UserBlueprint)
+
+    bcrypt.init_app(app)
 
     return app
 
