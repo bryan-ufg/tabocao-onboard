@@ -10,6 +10,7 @@ from crypt import bcrypt
 from jwt_auth import jwt
 
 from resources import UserBlueprint
+from resources import DriverBlueprint
 
 load_dotenv()
 
@@ -31,6 +32,7 @@ def create_app():
 
     api = Api(app)
     api.register_blueprint(UserBlueprint)
+    api.register_blueprint(DriverBlueprint)
 
     bcrypt.init_app(app)
     jwt.init_app(app)

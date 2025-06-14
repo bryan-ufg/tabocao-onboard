@@ -1,1 +1,2 @@
-from models.user import UserModel
+from .user import UserModel
+from .driver import DriverModel
