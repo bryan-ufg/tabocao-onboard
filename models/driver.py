@@ -13,3 +13,4 @@ class DriverModel(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc), nullable=False)
 
     trips = db.relationship("TripModel", back_populates=__tablename__, cascade="all, delete-orphan")
+    aso = db.relationship("ASOModel", back_populates=__tablename__, cascade="all, delete-orphan")
