@@ -11,3 +11,5 @@ class DriverModel(db.Model):
     driver_license = db.Column(db.String, unique=True, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc), nullable=False)
     updated_at = db.Column(db.DateTime(timezone=True), default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc), nullable=False)
+
+    trips = db.relationship("TripModel", back_populates=__tablename__, cascade="all, delete-orphan")

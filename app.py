@@ -12,6 +12,7 @@ from jwt_auth import jwt
 from resources import UserBlueprint
 from resources import DriverBlueprint
 from resources import TruckBlueprint
+from resources import TripBlueprint
 
 load_dotenv()
 
@@ -35,6 +36,7 @@ def create_app():
     api.register_blueprint(UserBlueprint)
     api.register_blueprint(DriverBlueprint)
     api.register_blueprint(TruckBlueprint)
+    api.register_blueprint(TripBlueprint)
 
     bcrypt.init_app(app)
     jwt.init_app(app)
