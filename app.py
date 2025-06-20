@@ -15,6 +15,7 @@ from resources import TruckBlueprint
 from resources import TripBlueprint
 from resources import ASOBlueprint
 from resources import TruckMaintenanceBlueprint
+from resources import MockDataBlueprint
 
 load_dotenv()
 
@@ -41,6 +42,7 @@ def create_app():
     api.register_blueprint(TripBlueprint)
     api.register_blueprint(ASOBlueprint)
     api.register_blueprint(TruckMaintenanceBlueprint)
+    api.register_blueprint(MockDataBlueprint)
 
     bcrypt.init_app(app)
     jwt.init_app(app)
