@@ -15,7 +15,11 @@ from resources import TruckBlueprint
 from resources import TripBlueprint
 from resources import ASOBlueprint
 from resources import TruckMaintenanceBlueprint
+<<<<<<< HEAD
 from resources import MockDataBlueprint
+=======
+from resources import APIPlaceholderBlueprint
+>>>>>>> e9a2819 (Migration do Placeholder e registro do Blueprint)
 
 load_dotenv()
 
@@ -43,6 +47,7 @@ def create_app():
     api.register_blueprint(ASOBlueprint)
     api.register_blueprint(TruckMaintenanceBlueprint)
     api.register_blueprint(MockDataBlueprint)
+    api.register_blueprint(APIPlaceholderBlueprint)
 
     bcrypt.init_app(app)
     jwt.init_app(app)

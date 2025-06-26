@@ -13,7 +13,7 @@ blp = Blueprint("APIPlaceholder", "api_placeholder", description="Operations on 
 class APIPlaceholderList(MethodView):
     @blp.response(200, APIPlaceholderSchema(many=True))
     def get(self):
-        return APIPlaceholderModel.query.order_by(APIPlaceholder.updated_at.desc()).limit(50).all()
+        return APIPlaceholderModel.query.order_by(APIPlaceholderModel.updated_at.desc()).limit(15).all()
 
 
     @blp.arguments(APIPlaceholderSchema)
@@ -28,7 +28,7 @@ class APIPlaceholderList(MethodView):
             db.session.rollback()
             abort(400, message=str(e))
         
-        return {"message": "APIPlaceholder created successfully."}, 201
+        return {"message": "External Data created successfully."}, 201
 
 
 @blp.route("/api_placeholder/<int:api_placeholder_id>")
