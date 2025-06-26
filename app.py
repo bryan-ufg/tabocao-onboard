@@ -4,10 +4,12 @@ from flask import Flask
 from flask_smorest import Api
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from db import db
 from crypt import bcrypt
 from jwt_auth import jwt
+from sync import fetch_and_sync_placeholder
 
 from resources import UserBlueprint
 from resources import DriverBlueprint
@@ -48,6 +50,11 @@ def create_app():
 
     bcrypt.init_app(app)
     jwt.init_app(app)
+
+    with app.app_context():
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(fetch_and_sync_placeholder, 'interval', hours=1, id='fetch_and_sync_placeholder_job', args=[app], replace_existing=True)
+        scheduler.start()
 
     return app
 
