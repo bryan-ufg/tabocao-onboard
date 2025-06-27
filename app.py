@@ -4,10 +4,12 @@ from flask import Flask
 from flask_smorest import Api
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from db import db
 from crypt import bcrypt
 from jwt_auth import jwt
+from sync import fetch_and_sync_placeholder
 
 from resources import UserBlueprint
 from resources import DriverBlueprint
@@ -16,6 +18,7 @@ from resources import TripBlueprint
 from resources import ASOBlueprint
 from resources import TruckMaintenanceBlueprint
 from resources import MockDataBlueprint
+from resources import APIPlaceholderBlueprint
 
 load_dotenv()
 
@@ -43,9 +46,15 @@ def create_app():
     api.register_blueprint(ASOBlueprint)
     api.register_blueprint(TruckMaintenanceBlueprint)
     api.register_blueprint(MockDataBlueprint)
+    api.register_blueprint(APIPlaceholderBlueprint)
 
     bcrypt.init_app(app)
     jwt.init_app(app)
+
+    with app.app_context():
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(fetch_and_sync_placeholder, 'interval', hours=1, id='fetch_and_sync_placeholder_job', args=[app], replace_existing=True)
+        scheduler.start()
 
     return app
 

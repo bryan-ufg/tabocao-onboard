@@ -4,3 +4,4 @@ from .truck import TruckModel
 from .trip import TripModel
 from .aso import ASOModel
 from .truck_maintenance import TruckMaintenanceModel
+from .api_placeholder import APIPlaceholderModel
