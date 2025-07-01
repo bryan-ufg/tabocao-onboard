@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from sqlalchemy.exc import IntegrityError
 
-from db import db
+from extensions import db
 
 from models import APIPlaceholderModel
 from schemas import APIPlaceholderSchema

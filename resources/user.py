@@ -3,8 +3,7 @@ from flask_smorest import Blueprint, abort
 from flask_jwt_extended import create_access_token, jwt_required
 from sqlalchemy.exc import IntegrityError
 
-from db import db
-from crypt import bcrypt
+from extensions import db, bcrypt
 
 from models import UserModel
 from schemas import UserSchema

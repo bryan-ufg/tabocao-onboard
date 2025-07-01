@@ -1,7 +1,7 @@
 import datetime
 from external_apis import fetch_api_placeholder
 from models import APIPlaceholderModel
-from db import db
+from extensions import db
 
 def fetch_and_sync_placeholder(app):
     with app.app_context():

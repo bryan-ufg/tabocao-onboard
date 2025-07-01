@@ -2,13 +2,10 @@ import os
 
 from flask import Flask
 from flask_smorest import Api
-from flask_migrate import Migrate
 from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from db import db
-from crypt import bcrypt
-from jwt_auth import jwt
+from extensions import db, migrate, bcrypt, jwt
 from sync import fetch_and_sync_placeholder
 
 from resources import UserBlueprint
@@ -20,9 +17,9 @@ from resources import TruckMaintenanceBlueprint
 from resources import MockDataBlueprint
 from resources import APIPlaceholderBlueprint
 
-load_dotenv()
-
 def create_app():
+    load_dotenv()
+
     app = Flask(__name__)
     app.config["API_TITLE"] = "Tabocão Onboard REST API"
     app.config["API_VERSION"] = "v1"
@@ -41,8 +38,9 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
 
     db.init_app(app)
-
-    migrate = Migrate(app, db) # Habilita o Flask-Migrate
+    migrate.init_app(app, db)
+    bcrypt.init_app(app)
+    jwt.init_app(app)
 
     api = Api(app)
     api.register_blueprint(UserBlueprint)
@@ -53,9 +51,6 @@ def create_app():
     api.register_blueprint(TruckMaintenanceBlueprint)
     api.register_blueprint(MockDataBlueprint)
     api.register_blueprint(APIPlaceholderBlueprint)
-
-    bcrypt.init_app(app)
-    jwt.init_app(app)
 
     with app.app_context():
         scheduler = BackgroundScheduler()
