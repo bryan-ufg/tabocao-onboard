@@ -1,3 +1,4 @@
+from flask import g
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from sqlalchemy.exc import IntegrityError
@@ -7,16 +8,20 @@ from extensions import db
 from models import DriverModel
 from schemas import DriverSchema
 
+from services import verify_session
+
 blp = Blueprint("Drivers", "drivers", description="Operations on drivers")
 
 @blp.route("/driver")
 class DriverList(MethodView):
     @blp.response(200, DriverSchema(many=True))
+    @verify_session
     def get(self):
         return DriverModel.query.all()
 
     @blp.arguments(DriverSchema)
     @blp.response(201)
+    @verify_session
     def post(self, driver_data):
         driver = DriverModel(**driver_data)
 
