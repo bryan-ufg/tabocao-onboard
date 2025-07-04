@@ -57,3 +57,6 @@ htmlcov/
 
 # pytest
 .pytest_cache/
+
+# SQL files
+*.sql
