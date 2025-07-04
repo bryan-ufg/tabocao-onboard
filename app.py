@@ -17,7 +17,7 @@ from resources import TruckMaintenanceBlueprint
 from resources import MockDataBlueprint
 from resources import APIPlaceholderBlueprint
 
-def create_app():
+def create_app(config_override=None):
     load_dotenv()
 
     app = Flask(__name__)
@@ -36,6 +36,9 @@ def create_app():
         db_uri = os.getenv("DATABASE_SQLITE_URI")
     
     app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+
+    if config_override:
+        app.config.update(config_override)
 
     db.init_app(app)
     migrate.init_app(app, db)
