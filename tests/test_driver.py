@@ -1,6 +1,5 @@
 import json
 from datetime import date
-from unittest.mock import patch
 
 def test_get_drivers(client):
     response = client.get("/driver")
