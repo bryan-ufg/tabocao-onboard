@@ -1,13 +1,6 @@
 import json
 from datetime import date
 
-def test_get_drivers(client):
-    response = client.get("/user")
-    assert response.status_code == 200
-
-    data = response.get_json()
-    assert isinstance(data, list)
-
 def test_create_driver(client):
     payload = {
         "name": "João da Silva",
@@ -19,3 +12,14 @@ def test_create_driver(client):
     
     assert response.status_code == 201
     assert b"User created successfully" in response.data
+
+def test_get_drivers(client):
+    test_create_driver(client)
+
+    response = client.get("/user")
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert isinstance(data, list)
+
+    assert data[0]
