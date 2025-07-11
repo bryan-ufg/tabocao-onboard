@@ -2,7 +2,9 @@ import json
 from datetime import date
 import re
 
-def test_create_driver(client):
+endpoint = "/driver"
+
+def add_driver(client):
     payload = {
         "name": "Senna",
         "birthday": "1960-03-21",
@@ -10,15 +12,20 @@ def test_create_driver(client):
         "driver_license": "ABC123456"
     }
 
-    response = client.post("/driver", data=json.dumps(payload), content_type="application/json")
+    response = client.post(endpoint, data=json.dumps(payload), content_type="application/json")
     
+    return response
+
+def test_create_driver(client):
+    response = add_driver(client)
     assert response.status_code == 201
     assert b"Driver created successfully" in response.data
 
 def test_get_drivers(client):
-    test_create_driver(client)
+    response = add_driver(client)
+    assert response.status_code == 201
 
-    response = client.get("/driver")
+    response = client.get(endpoint)
     assert response.status_code == 200
 
     data = response.get_json()
