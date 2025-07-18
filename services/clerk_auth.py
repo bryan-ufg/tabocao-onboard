@@ -18,7 +18,7 @@ def verify_session(fn):
                 auth_result = clerk_client.authenticate_request(request, options)
 
                 if not auth_result.is_signed_in:
-                    return {"message": "Unauthorized", "reason": auth_result.reason}, 401
+                    return {"message": "Unauthorized", "reason": str(auth_result.reason)}, 401
 
                 g.clerk_user = auth_result.payload
 
